@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Milo\Github;
 
 
@@ -148,7 +150,7 @@ class Paginator extends Sanity implements \Iterator
 	 */
 	public static function parseLink($link, $rel)
 	{
-		if (!preg_match('(<([^>]+)>;\s*rel="' . preg_quote($rel) . '")', $link, $match)) {
+		if (!preg_match('(<([^>]+)>;\s*rel="' . preg_quote($rel) . '")', "$link", $match)) {
 			return null;
 		}
 

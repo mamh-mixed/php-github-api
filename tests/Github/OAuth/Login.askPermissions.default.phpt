@@ -6,6 +6,8 @@
  * @httpCode 302
  */
 
+declare(strict_types=1);
+
 require __DIR__ . '/../../bootstrap.php';
 Assert::true(true);
 

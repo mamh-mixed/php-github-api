@@ -6,6 +6,8 @@
  * @outputMatch Was called. Must die by own.
  */
 
+declare(strict_types=1);
+
 require __DIR__ . '/../../bootstrap.php';
 
 

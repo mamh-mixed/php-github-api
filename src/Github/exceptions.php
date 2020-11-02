@@ -1,5 +1,6 @@
 <?php
 
+declare(strict_types=1);
 
 /**
  * All Milo\Github exceptions at one place. Whole library does not throw anything else.
