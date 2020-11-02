@@ -29,6 +29,7 @@ class StreamClient extends AbstractClient
 	{
 		parent::setupRequest($request);
 		$request->setHeader('Connection', 'close');
+		$request->setHeader('Expect', '100-continue');
 	}
 
 
