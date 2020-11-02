@@ -57,12 +57,12 @@ test(function() {
 	$client = new TestClient;
 	$client->onProcess = function() { return new Milo\Github\Http\Response(200, [], '{response}'); };
 
-	$onRequest = NULL;
+	$onRequest = null;
 	$client->onRequest(function(Milo\Github\Http\Request $request) use (& $onRequest) {
 		$onRequest = $request->getContent();
 	});
 
-	$onResponse = NULL;
+	$onResponse = null;
 	$client->onResponse(function(Milo\Github\Http\Response $response) use (& $onResponse) {
 		$onResponse = $response->getContent();
 	});

@@ -96,8 +96,8 @@ class PaginatorTestCase extends Tester\TestCase
 		Assert::same('url://b', Milo\Github\Paginator::parseLink($link, 'b'));
 		Assert::same('url://c', Milo\Github\Paginator::parseLink($link, 'c'));
 
-		Assert::same(NULL, Milo\Github\Paginator::parseLink('', ''));
-		Assert::same(NULL, Milo\Github\Paginator::parseLink('<url://test>; rel="foo"', 'bar'));
+		Assert::same(null, Milo\Github\Paginator::parseLink('', ''));
+		Assert::same(null, Milo\Github\Paginator::parseLink('<url://test>; rel="foo"', 'bar'));
 	}
 
 

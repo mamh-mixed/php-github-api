@@ -10,14 +10,14 @@ namespace Milo\Github\Http;
  */
 class StreamClient extends AbstractClient
 {
-	/** @var array|NULL */
+	/** @var array|null */
 	private $sslOptions;
 
 
 	/**
 	 * @param  array  SSL context options {@link http://php.net/manual/en/context.ssl.php}
 	 */
-	public function __construct(array $sslOptions = NULL)
+	public function __construct(array $sslOptions = null)
 	{
 		$this->sslOptions = $sslOptions;
 	}
@@ -59,7 +59,7 @@ class StreamClient extends AbstractClient
 			],
 		];
 
-		if (($content = $request->getContent()) !== NULL) {
+		if (($content = $request->getContent()) !== null) {
 			$options['http']['content'] = $content;
 		}
 
@@ -84,7 +84,7 @@ class StreamClient extends AbstractClient
 	{
 		$context = stream_context_create($contextOptions);
 
-		$e = NULL;
+		$e = null;
 		set_error_handler(function($severity, $message, $file, $line) use (& $e) {
 			$e = new \ErrorException($message, 0, $severity, $file, $line, $e);
 		}, E_WARNING);
@@ -106,7 +106,7 @@ class StreamClient extends AbstractClient
 			if (in_array(substr($header, 0, 1), [' ', "\t"], TRUE)) {
 				$headers[$last] .= ' ' . trim($header);  # RFC2616, 2.2
 			} else {
-				list($name, $value) = explode(':', $header, 2) + [NULL, NULL];
+				list($name, $value) = explode(':', $header, 2) + [null, null];
 				$headers[$last = trim($name)] = trim($value);
 			}
 		}

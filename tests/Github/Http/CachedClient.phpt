@@ -53,7 +53,7 @@ class MockCache implements Milo\Github\Storages\ICache
 	{
 		return isset($this->cache[$key])
 			? $this->cache[$key]
-			: NULL;
+			: null;
 	}
 
 }

@@ -75,7 +75,7 @@ class Helpers
 
 		$value = json_decode($json, FALSE, 512, (defined('JSON_C_VERSION') && PHP_INT_SIZE > 4) ? 0 : JSON_BIGINT_AS_STRING);
 
-		if ($value === NULL && $json !== '' && strcasecmp($json, 'null')) { // '' does not clear json_last_error()
+		if ($value === null && $json !== '' && strcasecmp($json, 'null')) { // '' does not clear json_last_error()
 			$error = json_last_error();
 			throw new JsonException(isset(static::$jsonMessages[$error]) ? static::$jsonMessages[$error] : 'Unknown error', $error);
 		}
@@ -89,7 +89,7 @@ class Helpers
 	 */
 	public static function createDefaultClient($newInstance = FALSE)
 	{
-		if (self::$client === NULL || $newInstance) {
+		if (self::$client === null || $newInstance) {
 			self::$client = extension_loaded('curl')
 				? new Http\CurlClient
 				: new Http\StreamClient;

@@ -34,7 +34,7 @@ class SessionStorage extends Github\Sanity implements ISessionStorage
 	 */
 	public function set($name, $value)
 	{
-		if ($value === NULL) {
+		if ($value === null) {
 			return $this->remove($name);
 		}
 
@@ -55,7 +55,7 @@ class SessionStorage extends Github\Sanity implements ISessionStorage
 
 		return isset($_SESSION[$this->sessionKey][$name])
 			? $_SESSION[$this->sessionKey][$name]
-			: NULL;
+			: null;
 	}
 
 

@@ -12,7 +12,7 @@ use Milo\Github;
  */
 class CurlClient extends AbstractClient
 {
-	/** @var array|NULL */
+	/** @var array|null */
 	private $options;
 
 	/** @var resource */
@@ -24,7 +24,7 @@ class CurlClient extends AbstractClient
 	 *
 	 * @throws Github\LogicException
 	 */
-	public function __construct(array $options = NULL)
+	public function __construct(array $options = null)
 	{
 		if (!extension_loaded('curl')) {
 			throw new Github\LogicException('cURL extension is not loaded.');

@@ -63,7 +63,7 @@ class FileCache extends Github\Sanity implements ICache
 
 	/**
 	 * @param  string
-	 * @return mixed|NULL
+	 * @return mixed|null
 	 */
 	public function load($key)
 	{
