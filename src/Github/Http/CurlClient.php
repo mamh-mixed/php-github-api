@@ -22,7 +22,7 @@ class CurlClient extends AbstractClient
 
 
 	/**
-	 * @param  array  cURL options {@link http://php.net/manual/en/function.curl-setopt.php}
+	 * @param  array|null $options  cURL options {@link http://php.net/manual/en/function.curl-setopt.php}
 	 *
 	 * @throws Github\LogicException
 	 */
@@ -36,7 +36,7 @@ class CurlClient extends AbstractClient
 	}
 
 
-	protected function setupRequest(Request $request)
+	protected function setupRequest(Request $request): void
 	{
 		parent::setupRequest($request);
 		$request->addHeader('Connection', 'keep-alive');
@@ -44,11 +44,9 @@ class CurlClient extends AbstractClient
 
 
 	/**
-	 * @return Response
-	 *
 	 * @throws BadResponseException
 	 */
-	protected function process(Request $request)
+	protected function process(Request $request): Response
 	{
 		$headers = [];
 		foreach ($request->getHeaders() as $name => $value) {
@@ -120,5 +118,4 @@ class CurlClient extends AbstractClient
 
 		return new Response($code, $responseHeaders, $content);
 	}
-
 }

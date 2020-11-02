@@ -12,21 +12,19 @@ namespace Milo\Github\Http;
  */
 interface IClient
 {
-	/**
-	 * @return Response
-	 */
-	function request(Request $request);
+	function request(Request $request): Response;
+
 
 	/**
-	 * @param  callable|null
-	 * @return self
+	 * @param  callable|null function(Request $request)
+	 * @return static
 	 */
-	function onRequest($callback);
+	function onRequest(?callable $callback);
+
 
 	/**
-	 * @param  callable|null
-	 * @return self
+	 * @param  callable|null function(Response $request)
+	 * @return static
 	 */
-	function onResponse($callback);
-
+	function onResponse(?callable $callback);
 }

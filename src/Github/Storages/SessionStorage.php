@@ -20,21 +20,17 @@ class SessionStorage extends Github\Sanity implements ISessionStorage
 	private $sessionKey;
 
 
-	/**
-	 * @param  string
-	 */
-	public function __construct($sessionKey = self::SESSION_KEY)
+	public function __construct(string $sessionKey = self::SESSION_KEY)
 	{
 		$this->sessionKey = $sessionKey;
 	}
 
 
 	/**
-	 * @param  string
-	 * @param  mixed
-	 * @return self
+	 * @param  mixed $value
+	 * @return static
 	 */
-	public function set($name, $value)
+	public function set(string $name, $value)
 	{
 		if ($value === null) {
 			return $this->remove($name);
@@ -48,10 +44,9 @@ class SessionStorage extends Github\Sanity implements ISessionStorage
 
 
 	/**
-	 * @param  string
 	 * @return mixed
 	 */
-	public function get($name)
+	public function get(string $name)
 	{
 		$this->check(__METHOD__);
 
@@ -62,10 +57,9 @@ class SessionStorage extends Github\Sanity implements ISessionStorage
 
 
 	/**
-	 * @param  string
-	 * @return self
+	 * @return static
 	 */
-	public function remove($name)
+	public function remove(string $name)
 	{
 		$this->check(__METHOD__);
 
@@ -78,11 +72,10 @@ class SessionStorage extends Github\Sanity implements ISessionStorage
 	/**
 	 * @param  string
 	 */
-	private function check($method)
+	private function check(string $method)
 	{
 		if (!isset($_SESSION)) {
 			trigger_error("Start session before using $method().", E_USER_WARNING);
 		}
 	}
-
 }

@@ -21,33 +21,20 @@ abstract class Message extends Github\Sanity
 	private $content;
 
 
-	/**
-	 * @param  array
-	 * @param  string|null
-	 */
-	public function __construct(array $headers = [], $content = null)
+	public function __construct(array $headers = [], string $content = null)
 	{
 		$this->headers = array_change_key_case($headers, CASE_LOWER);
 		$this->content = $content;
 	}
 
 
-	/**
-	 * @param  string
-	 * @return bool
-	 */
-	public function hasHeader($name)
+	public function hasHeader(string $name): bool
 	{
 		return array_key_exists(strtolower($name), $this->headers);
 	}
 
 
-	/**
-	 * @param  string
-	 * @param  mixed
-	 * @return mixed
-	 */
-	public function getHeader($name, $default = null)
+	public function getHeader(string $name, $default = null)
 	{
 		$name = strtolower($name);
 		return array_key_exists($name, $this->headers)
@@ -57,11 +44,9 @@ abstract class Message extends Github\Sanity
 
 
 	/**
-	 * @param  string
-	 * @param  string
-	 * @return self
+	 * @return static
 	 */
-	protected function addHeader($name, $value)
+	protected function addHeader(string $name, $value)
 	{
 		$name = strtolower($name);
 		if (!array_key_exists($name, $this->headers) && $value !== null) {
@@ -73,11 +58,9 @@ abstract class Message extends Github\Sanity
 
 
 	/**
-	 * @param  string
-	 * @param  string|null
-	 * @return self
+	 * @return static
 	 */
-	protected function setHeader($name, $value)
+	protected function setHeader(string $name, $value)
 	{
 		$name = strtolower($name);
 		if ($value === null) {
@@ -90,21 +73,14 @@ abstract class Message extends Github\Sanity
 	}
 
 
-	/**
-	 * @return array
-	 */
-	public function getHeaders()
+	public function getHeaders(): array
 	{
 		return $this->headers;
 	}
 
 
-	/**
-	 * @return string|null
-	 */
-	public function getContent()
+	public function getContent(): ?string
 	{
 		return $this->content;
 	}
-
 }

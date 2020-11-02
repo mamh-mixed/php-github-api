@@ -8,17 +8,14 @@ namespace Milo\Github\Storages;
 interface ICache
 {
 	/**
-	 * @param  string
-	 * @param  mixed
+	 * @param  mixed $value
 	 * @return mixed  stored value
 	 */
-	function save($key, $value);
+	function save(string $key, $value);
 
 
 	/**
-	 * @param  string
 	 * @return mixed|null
 	 */
-	function load($key);
-
+	function load(string $key);
 }

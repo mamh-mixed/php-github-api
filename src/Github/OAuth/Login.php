@@ -40,20 +40,17 @@ class Login extends Github\Sanity
 	}
 
 
-	/**
-	 * @return Http\IClient
-	 */
-	public function getClient()
+	public function getClient(): Http\IClient
 	{
 		return $this->client;
 	}
 
 
 	/**
-	 * @param  string  URL to redirect back from Github when user approves the permissions request
-	 * @param  callable function($githubUrl)  makes HTTP redirect to Github
+	 * @param  string $backUrl  URL to redirect back from Github when user approves the permissions request
+	 * @param  callable $redirectCb  function($githubUrl)  makes HTTP redirect to Github
 	 */
-	public function askPermissions($backUrl, $redirectCb = null)
+	public function askPermissions(string $backUrl, callable $redirectCb = null): void
 	{
 		/** @todo Something more safe? */
 		$state = sha1(uniqid((string) microtime(true), true));
@@ -77,13 +74,9 @@ class Login extends Github\Sanity
 
 
 	/**
-	 * @param  string
-	 * @param  string
-	 * @return Token
-	 *
 	 * @throws LoginException
 	 */
-	public function obtainToken($code, $state)
+	public function obtainToken(string $code, string $state): Token
 	{
 		if ($state !== $this->storage->get('auth.state')) {
 			throw new LoginException('OAuth security state does not match.');
@@ -131,21 +124,16 @@ class Login extends Github\Sanity
 	}
 
 
-	/**
-	 * @return bool
-	 */
-	public function hasToken()
+	public function hasToken(): bool
 	{
 		return $this->storage->get('auth.token') !== null;
 	}
 
 
 	/**
-	 * @return Token
-	 *
 	 * @throws Github\LogicException  when token has not been obtained yet
 	 */
-	public function getToken()
+	public function getToken(): Token
 	{
 		$token = $this->storage->get('auth.token');
 		if ($token === null) {
@@ -162,12 +150,11 @@ class Login extends Github\Sanity
 
 
 	/**
-	 * @return self
+	 * @return static
 	 */
 	public function dropToken()
 	{
 		$this->storage->remove('auth.token');
 		return $this;
 	}
-
 }

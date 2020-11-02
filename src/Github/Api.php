@@ -36,60 +36,40 @@ class Api extends Sanity
 	}
 
 
-	/**
-	 * @return self
-	 */
-	public function setToken(OAuth\Token $token = null)
+	public function setToken(OAuth\Token $token = null): self
 	{
 		$this->token = $token;
 		return $this;
 	}
 
 
-	/**
-	 * @return OAuth\Token|null
-	 */
-	public function getToken()
+	public function getToken(): ?OAuth\Token
 	{
 		return $this->token;
 	}
 
 
-	/**
-	 * @param  array
-	 * @return self
-	 */
-	public function setDefaultParameters(array $defaults = null)
+	public function setDefaultParameters(array $defaults = null): self
 	{
 		$this->defaultParameters = $defaults ?: [];
 		return $this;
 	}
 
 
-	/**
-	 * @return array
-	 */
-	public function getDefaultParameters()
+	public function getDefaultParameters(): array
 	{
 		return $this->defaultParameters;
 	}
 
 
-	/**
-	 * @param  string
-	 * @return self
-	 */
-	public function setDefaultAccept($accept)
+	public function setDefaultAccept(string $accept): self
 	{
 		$this->defaultAccept = $accept;
 		return $this;
 	}
 
 
-	/**
-	 * @return string
-	 */
-	public function getDefaultAccept()
+	public function getDefaultAccept(): string
 	{
 		return $this->defaultAccept;
 	}
@@ -99,12 +79,9 @@ class Api extends Sanity
 	 * @see createRequest()
 	 * @see request()
 	 *
-	 * @param  string
-	 * @return Http\Response
-	 *
 	 * @throws MissingParameterException
 	 */
-	public function delete($urlPath, array $parameters = [], array $headers = [])
+	public function delete(string $urlPath, array $parameters = [], array $headers = []): Http\Response
 	{
 		return $this->request(
 			$this->createRequest(Http\Request::DELETE, $urlPath, $parameters, $headers)
@@ -116,12 +93,9 @@ class Api extends Sanity
 	 * @see createRequest()
 	 * @see request()
 	 *
-	 * @param  string
-	 * @return Http\Response
-	 *
 	 * @throws MissingParameterException
 	 */
-	public function get($urlPath, array $parameters = [], array $headers = [])
+	public function get(string $urlPath, array $parameters = [], array $headers = []): Http\Response
 	{
 		return $this->request(
 			$this->createRequest(Http\Request::GET, $urlPath, $parameters, $headers)
@@ -133,12 +107,9 @@ class Api extends Sanity
 	 * @see createRequest()
 	 * @see request()
 	 *
-	 * @param  string
-	 * @return Http\Response
-	 *
 	 * @throws MissingParameterException
 	 */
-	public function head($urlPath, array $parameters = [], array $headers = [])
+	public function head(string $urlPath, array $parameters = [], array $headers = []): Http\Response
 	{
 		return $this->request(
 			$this->createRequest(Http\Request::HEAD, $urlPath, $parameters, $headers)
@@ -150,14 +121,12 @@ class Api extends Sanity
 	 * @see createRequest()
 	 * @see request()
 	 *
-	 * @param  string
-	 * @param  mixed
-	 * @return Http\Response
+	 * @param  mixed $content
 	 *
 	 * @throws MissingParameterException
 	 * @throws JsonException
 	 */
-	public function patch($urlPath, $content, array $parameters = [], array $headers = [])
+	public function patch(string $urlPath, $content, array $parameters = [], array $headers = []): Http\Response
 	{
 		return $this->request(
 			$this->createRequest(Http\Request::PATCH, $urlPath, $parameters, $headers, $content)
@@ -169,14 +138,12 @@ class Api extends Sanity
 	 * @see createRequest()
 	 * @see request()
 	 *
-	 * @param  string
-	 * @param  mixed
-	 * @return Http\Response
+	 * @param  mixed $content
 	 *
 	 * @throws MissingParameterException
 	 * @throws JsonException
 	 */
-	public function post($urlPath, $content, array $parameters = [], array $headers = [])
+	public function post(string $urlPath, $content, array $parameters = [], array $headers = []): Http\Response
 	{
 		return $this->request(
 			$this->createRequest(Http\Request::POST, $urlPath, $parameters, $headers, $content)
@@ -188,14 +155,12 @@ class Api extends Sanity
 	 * @see createRequest()
 	 * @see request()
 	 *
-	 * @param  string
-	 * @param  mixed
-	 * @return Http\Response
+	 * @param  mixed $content
 	 *
 	 * @throws MissingParameterException
 	 * @throws JsonException
 	 */
-	public function put($urlPath, $content = null, array $parameters = [], array $headers = [])
+	public function put(string $urlPath, $content = null, array $parameters = [], array $headers = []): Http\Response
 	{
 		return $this->request(
 			$this->createRequest(Http\Request::PUT, $urlPath, $parameters, $headers, $content)
@@ -204,11 +169,9 @@ class Api extends Sanity
 
 
 	/**
-	 * @return Http\Response
-	 *
 	 * @throws Http\BadResponseException
 	 */
-	public function request(Http\Request $request)
+	public function request(Http\Request $request): Http\Response
 	{
 		$request = clone $request;
 
@@ -226,17 +189,16 @@ class Api extends Sanity
 
 
 	/**
-	 * @param  string  Http\Request::GET|POST|...
-	 * @param  string  path like '/users/:user/repos' where ':user' is substitution
-	 * @param  array[name => value]  replaces substitutions in $urlPath, the rest is appended as query string to URL
-	 * @param  array[name => value]  name is case-insensitive
-	 * @param  mixed|null  arrays and objects are encoded to JSON and Content-Type is set
-	 * @return Http\Request
+	 * @param  string $method  Http\Request::GET|POST|...
+	 * @param  string $urlPath  path like '/users/:user/repos' where ':user' is substitution
+	 * @param  array $parameters  [name => value] replaces substitutions in $urlPath, the rest is appended as query string to URL
+	 * @param  array $headers  [name => value] name is case-insensitive
+	 * @param  mixed|null $content  arrays and objects are encoded to JSON and Content-Type is set
 	 *
 	 * @throws MissingParameterException  when substitution is used in URL but parameter is missing
 	 * @throws JsonException  when encoding to JSON fails
 	 */
-	public function createRequest($method, $urlPath, array $parameters = [], array $headers = [], $content = null)
+	public function createRequest(string $method, string $urlPath, array $parameters = [], array $headers = [], $content = null): Http\Request
 	{
 		if (stripos($urlPath, $this->url) === 0) {  # Allows non-HTTPS URLs
 			$baseUrl = $this->url;
@@ -268,8 +230,7 @@ class Api extends Sanity
 
 
 	/**
-	 * @param  Http\Response
-	 * @param  array|null  these codes are treated as success; code < 300 if null
+	 * @param  array|null $okCodes  these codes are treated as success; code < 300 if null
 	 * @return mixed
 	 *
 	 * @throws ApiException
@@ -325,12 +286,9 @@ class Api extends Sanity
 	 *
 	 * @see get()
 	 *
-	 * @param  string
-	 * @return Paginator
-	 *
 	 * @throws MissingParameterException
 	 */
-	public function paginator($urlPath, array $parameters = [], array $headers = [])
+	public function paginator(string $urlPath, array $parameters = [], array $headers = []): Paginator
 	{
 		return new Paginator(
 			$this,
@@ -339,20 +297,13 @@ class Api extends Sanity
 	}
 
 
-	/**
-	 * @return Http\IClient
-	 */
-	public function getClient()
+	public function getClient(): Http\IClient
 	{
 		return $this->client;
 	}
 
 
-	/**
-	 * @param  string
-	 * @return Api
-	 */
-	public function withUrl($url)
+	public function withUrl(string $url): Api
 	{
 		$api = clone $this;
 		$api->setUrl($url);
@@ -360,33 +311,23 @@ class Api extends Sanity
 	}
 
 
-	/**
-	 * @param  string
-	 * @return self
-	 */
-	public function setUrl($url)
+	public function setUrl(string $url): self
 	{
 		$this->url = $url;
 		return $this;
 	}
 
 
-	/**
-	 * @return string
-	 */
-	public function getUrl()
+	public function getUrl(): string
 	{
 		return $this->url;
 	}
 
 
 	/**
-	 * @param  string
-	 * @return string
-	 *
 	 * @throws MissingParameterException
 	 */
-	protected function expandColonParameters($url, array $parameters, array $defaultParameters)
+	protected function expandColonParameters(string $url, array $parameters, array $defaultParameters): string
 	{
 		$parameters += $defaultParameters;
 
@@ -414,11 +355,8 @@ class Api extends Sanity
 	 *
 	 * @see http://tools.ietf.org/html/rfc6570
 	 * @todo Inject remaining default parameters into query string?
-	 *
-	 * @param  string
-	 * @return string
 	 */
-	protected function expandUriTemplate($url, array $parameters, array $defaultParameters)
+	protected function expandUriTemplate(string $url, array $parameters, array $defaultParameters): string
 	{
 		$parameters += $defaultParameters;
 
@@ -514,13 +452,7 @@ class Api extends Sanity
 	}
 
 
-	/**
-	 * @param  array
-	 * @param  string
-	 * @param  string  already escaped
-	 * @return string
-	 */
-	private function prefix(array $flags, $name, $value)
+	private function prefix(array $flags, string $name, string $value): string
 	{
 		$prefix = '';
 		if ($flags['named']) {
@@ -536,13 +468,7 @@ class Api extends Sanity
 	}
 
 
-	/**
-	 * @param  array
-	 * @param  mixed
-	 * @param  int|null
-	 * @return string
-	 */
-	private function escape(array $flags, $value, $maxLength = null)
+	private function escape(array $flags, $value, int $maxLength = null): string
 	{
 		$value = (string) $value;
 
@@ -570,11 +496,7 @@ class Api extends Sanity
 	}
 
 
-	/**
-	 * @param  array
-	 * @param  callable
-	 */
-	private function walk(array $array, $cb)
+	private function walk(array $array, callable $cb): void
 	{
 		foreach ($array as $k => $v) {
 			if ($v === null) {
@@ -586,11 +508,7 @@ class Api extends Sanity
 	}
 
 
-	/**
-	 * @param  \stdClass
-	 * @return string
-	 */
-	private static function errorMessage($content)
+	private static function errorMessage(\stdClass $content): string
 	{
 		$message = isset($content->message)
 			? $content->message
@@ -604,5 +522,4 @@ class Api extends Sanity
 
 		return $message;
 	}
-
 }

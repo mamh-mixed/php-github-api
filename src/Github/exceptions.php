@@ -49,11 +49,7 @@ namespace Milo\Github {
 		private $response;
 
 
-		/**
-		 * @param string
-		 * @param int
-		 */
-		public function __construct($message = '', $code = 0, \Exception $previous = null, Http\Response $response = null)
+		public function __construct(string $message = '', int $code = 0, \Exception $previous = null, Http\Response $response = null)
 		{
 			parent::__construct($message, $code, $previous);
 			$this->response = clone $response;
@@ -67,7 +63,6 @@ namespace Milo\Github {
 		{
 			return $this->response;
 		}
-
 	}
 
 
@@ -136,20 +131,17 @@ namespace Milo\Github {
 	class JsonException extends RuntimeException
 	{
 	}
-
 }
 
 
 namespace Milo\Github\Http {
 	use Milo\Github;
 
-
 	/**
 	 * HTTP response is somehow wrong and cannot be processed.
 	 */
 	class BadResponseException extends Github\RuntimeException
 	{}
-
 }
 
 
@@ -161,7 +153,6 @@ namespace Milo\Github\OAuth {
 	 */
 	class LoginException extends Github\RuntimeException
 	{}
-
 }
 
 
@@ -173,5 +164,4 @@ namespace Milo\Github\Storages {
 	 */
 	class MissingDirectoryException extends Github\RuntimeException
 	{}
-
 }

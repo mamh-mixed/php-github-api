@@ -34,12 +34,7 @@ class Response extends Message
 	private $previous;
 
 
-	/**
-	 * @param  int
-	 * @param  array
-	 * @param  string
-	 */
-	public function __construct($code, array $headers, $content)
+	public function __construct(int $code, array $headers, ?string $content)
 	{
 		$this->code = (int) $code;
 		parent::__construct($headers, $content);
@@ -48,35 +43,27 @@ class Response extends Message
 
 	/**
 	 * HTTP code.
-	 * @return int
 	 */
-	public function getCode()
+	public function getCode(): int
 	{
 		return $this->code;
 	}
 
 
-	/**
-	 * @param  int
-	 * @return bool
-	 */
-	public function isCode($code)
+	public function isCode(int $code): bool
 	{
 		return $this->code === (int) $code;
 	}
 
 
-	/**
-	 * @return Response|null
-	 */
-	public function getPrevious()
+	public function getPrevious(): ?Response
 	{
 		return $this->previous;
 	}
 
 
 	/**
-	 * @return self
+	 * @return static
 	 *
 	 * @throws Github\LogicException
 	 */
@@ -89,5 +76,4 @@ class Response extends Message
 
 		return $this;
 	}
-
 }

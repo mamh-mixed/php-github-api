@@ -25,11 +25,9 @@ class Token extends Github\Sanity
 
 
 	/**
-	 * @param  string
-	 * @param  string
-	 * @param  string[]
+	 * @param  string[] $scopes
 	 */
-	public function __construct($value, $type = '', array $scopes = [])
+	public function __construct(string $value, string $type = '', array $scopes = [])
 	{
 		$this->value = $value;
 		$this->type = $type;
@@ -37,19 +35,13 @@ class Token extends Github\Sanity
 	}
 
 
-	/**
-	 * @return string
-	 */
-	public function getValue()
+	public function getValue(): string
 	{
 		return $this->value;
 	}
 
 
-	/**
-	 * @return string
-	 */
-	public function getType()
+	public function getType(): string
 	{
 		return $this->type;
 	}
@@ -58,7 +50,7 @@ class Token extends Github\Sanity
 	/**
 	 * @return string[]
 	 */
-	public function getScopes()
+	public function getScopes(): array
 	{
 		return $this->scopes;
 	}
@@ -66,11 +58,8 @@ class Token extends Github\Sanity
 
 	/**
 	 * @see https://developer.github.com/v3/oauth/#scopes
-	 *
-	 * @param  string
-	 * @return bool
 	 */
-	public function hasScope($scope)
+	public function hasScope(string $scope): bool
 	{
 		if (in_array($scope, $this->scopes, true)) {
 			return true;
@@ -91,7 +80,7 @@ class Token extends Github\Sanity
 
 
 	/** @internal */
-	public function toArray()
+	public function toArray(): array
 	{
 		return [
 			'value' => $this->value,
@@ -106,5 +95,4 @@ class Token extends Github\Sanity
 	{
 		return new static($data['value'], $data['type'], $data['scopes']);
 	}
-
 }

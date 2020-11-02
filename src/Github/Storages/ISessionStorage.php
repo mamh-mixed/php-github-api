@@ -11,24 +11,20 @@ namespace Milo\Github\Storages;
 interface ISessionStorage
 {
 	/**
-	 * @param  string
-	 * @param  mixed
-	 * @return self
+	 * @param  mixed $value
+	 * @return static
 	 */
-	function set($name, $value);
+	function set(string $name, $value);
 
 
 	/**
-	 * @param  string
 	 * @return mixed
 	 */
-	function get($name);
+	function get(string $name);
 
 
 	/**
-	 * @param  string
-	 * @return self
+	 * @return static
 	 */
-	function remove($name);
-
+	function remove(string $name);
 }

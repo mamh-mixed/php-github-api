@@ -14,7 +14,7 @@ class TestClient extends Milo\Github\Http\StreamClient
 	/** @var callable */
 	public $onFileGetContents;
 
-	protected function fileGetContents($url, array $contextOptions)
+	protected function fileGetContents(string $url, array $contextOptions): array
 	{
 		return call_user_func($this->onFileGetContents, $url, $contextOptions);
 	}

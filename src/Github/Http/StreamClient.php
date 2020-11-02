@@ -17,7 +17,7 @@ class StreamClient extends AbstractClient
 
 
 	/**
-	 * @param  array  SSL context options {@link http://php.net/manual/en/context.ssl.php}
+	 * @param  array|null $sslOptions  SSL context options {@link http://php.net/manual/en/context.ssl.php}
 	 */
 	public function __construct(array $sslOptions = null)
 	{
@@ -25,7 +25,7 @@ class StreamClient extends AbstractClient
 	}
 
 
-	protected function setupRequest(Request $request)
+	protected function setupRequest(Request $request): void
 	{
 		parent::setupRequest($request);
 		$request->setHeader('Connection', 'close');
@@ -33,11 +33,9 @@ class StreamClient extends AbstractClient
 
 
 	/**
-	 * @return Response
-	 *
 	 * @throws BadResponseException
 	 */
-	protected function process(Request $request)
+	protected function process(Request $request): Response
 	{
 		$headerStr = [];
 		foreach ($request->getHeaders() as $name => $value) {
@@ -76,13 +74,9 @@ class StreamClient extends AbstractClient
 
 	/**
 	 * @internal
-	 * @param  string
-	 * @param  array
-	 * @return array
-	 *
 	 * @throws BadResponseException
 	 */
-	protected function fileGetContents($url, array $contextOptions)
+	protected function fileGetContents(string $url, array $contextOptions): array
 	{
 		$context = stream_context_create($contextOptions);
 
@@ -113,7 +107,6 @@ class StreamClient extends AbstractClient
 			}
 		}
 
-		return [$m[1], $headers, $content];
+		return [(int) $m[1], $headers, $content];
 	}
-
 }

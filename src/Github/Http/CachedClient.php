@@ -29,11 +29,9 @@ class CachedClient extends Github\Sanity implements IClient
 
 
 	/**
-	 * @param Storages\ICache
-	 * @param IClient
-	 * @param bool  forbid checking Github for new data; more or less development purpose only
+	 * @param bool $forbidRecheck  forbid checking Github for new data; more or less development purpose only
 	 */
-	public function __construct(Storages\ICache $cache, IClient $client = null, $forbidRecheck = false)
+	public function __construct(Storages\ICache $cache, IClient $client = null, bool $forbidRecheck = false)
 	{
 		$this->cache = $cache;
 		$this->client = $client ?: Github\Helpers::createDefaultClient();
@@ -41,21 +39,16 @@ class CachedClient extends Github\Sanity implements IClient
 	}
 
 
-	/**
-	 * @return IClient
-	 */
-	public function getInnerClient()
+	public function getInnerClient(): IClient
 	{
 		return $this->client;
 	}
 
 
 	/**
-	 * @return Response
-	 *
 	 * @throws BadResponseException
 	 */
-	public function request(Request $request)
+	public function request(Request $request): Response
 	{
 		$request = clone $request;
 
@@ -104,22 +97,14 @@ class CachedClient extends Github\Sanity implements IClient
 	}
 
 
-	/**
-	 * @param  callable|null function(Request $request)
-	 * @return self
-	 */
-	public function onRequest($callback)
+	public function onRequest(?callable $callback)
 	{
 		$this->client->onRequest($callback);
 		return $this;
 	}
 
 
-	/**
-	 * @param  callable|null function(Response $response)
-	 * @return self
-	 */
-	public function onResponse($callback)
+	public function onResponse(?callable $callback)
 	{
 		$this->client->onResponse(null);
 		$this->onResponse = $callback;
@@ -127,10 +112,7 @@ class CachedClient extends Github\Sanity implements IClient
 	}
 
 
-	/**
-	 * @return bool
-	 */
-	protected function isCacheable(Response $response)
+	protected function isCacheable(Response $response): bool
 	{
 		/** @todo Do it properly. Vary:, Pragma:, TTL...  */
 		if (!$response->isCode(200)) {
@@ -141,5 +123,4 @@ class CachedClient extends Github\Sanity implements IClient
 
 		return $response->hasHeader('ETag') || $response->hasHeader('Last-Modified');
 	}
-
 }

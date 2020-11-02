@@ -19,11 +19,9 @@ class FileCache extends Github\Sanity implements ICache
 
 
 	/**
-	 * @param  string  temporary directory
-	 *
 	 * @throws MissingDirectoryException
 	 */
-	public function __construct($tempDir)
+	public function __construct(string $tempDir)
 	{
 		if (!is_dir($tempDir)) {
 			throw new MissingDirectoryException("Directory '$tempDir' is missing.");
@@ -47,11 +45,10 @@ class FileCache extends Github\Sanity implements ICache
 
 
 	/**
-	 * @param  string
-	 * @param  mixed
+	 * @param  mixed $value
 	 * @return mixed  stored value
 	 */
-	public function save($key, $value)
+	public function save(string $key, $value)
 	{
 		file_put_contents(
 			$this->filePath($key),
@@ -64,10 +61,10 @@ class FileCache extends Github\Sanity implements ICache
 
 
 	/**
-	 * @param  string
+	 * @param  string $key
 	 * @return mixed|null
 	 */
-	public function load($key)
+	public function load(string $key)
 	{
 		$path = $this->filePath($key);
 		if (is_file($path) && ($fd = fopen($path, 'rb')) && flock($fd, LOCK_SH)) {
@@ -84,16 +81,13 @@ class FileCache extends Github\Sanity implements ICache
 				return $cached;
 			}
 		}
+
+		return null;
 	}
 
 
-	/**
-	 * @param  string
-	 * @return string
-	 */
-	private function filePath($key)
+	private function filePath(string $key): string
 	{
 		return $this->dir . DIRECTORY_SEPARATOR . sha1($key) . '.php';
 	}
-
 }

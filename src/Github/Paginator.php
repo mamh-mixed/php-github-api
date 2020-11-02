@@ -42,11 +42,8 @@ class Paginator extends Sanity implements \Iterator
 
 	/**
 	 * Limits maximum steps of iteration.
-	 *
-	 * @param  int|null
-	 * @return self
 	 */
-	public function limit($limit)
+	public function limit(?int $limit): self
 	{
 		$this->limit = $limit === null
 			? null
@@ -56,10 +53,7 @@ class Paginator extends Sanity implements \Iterator
 	}
 
 
-	/**
-	 * @return void
-	 */
-	public function rewind()
+	public function rewind(): void
 	{
 		$this->request = $this->firstRequest;
 		$this->response = null;
@@ -67,38 +61,26 @@ class Paginator extends Sanity implements \Iterator
 	}
 
 
-	/**
-	 * @return bool
-	 */
-	public function valid()
+	public function valid(): bool
 	{
 		return $this->request !== null && ($this->limit === null || $this->counter < $this->limit);
 	}
 
 
-	/**
-	 * @return Http\Response
-	 */
-	public function current()
+	public function current(): Http\Response
 	{
 		$this->load();
 		return $this->response;
 	}
 
 
-	/**
-	 * @return int
-	 */
-	public function key()
+	public function key(): int
 	{
 		return static::parsePage($this->request->getUrl());
 	}
 
 
-	/**
-	 * @return void
-	 */
-	public function next()
+	public function next(): void
 	{
 		$this->load();
 
@@ -126,11 +108,7 @@ class Paginator extends Sanity implements \Iterator
 	}
 
 
-	/**
-	 * @param  string
-	 * @return int
-	 */
-	public static function parsePage($url)
+	public static function parsePage(string $url): int
 	{
 		list (, $parametersStr) = explode('?', $url, 2) + ['', ''];
 		parse_str($parametersStr, $parameters);
@@ -143,18 +121,13 @@ class Paginator extends Sanity implements \Iterator
 
 	/**
 	 * @see  https://developer.github.com/guides/traversing-with-pagination/#navigating-through-the-pages
-	 *
-	 * @param  string
-	 * @param  string
-	 * @return string|null
 	 */
-	public static function parseLink($link, $rel)
+	public static function parseLink(?string $link, ?string $rel): ?string
 	{
-		if (!preg_match('(<([^>]+)>;\s*rel="' . preg_quote($rel) . '")', "$link", $match)) {
+		if (!preg_match('(<([^>]+)>;\s*rel="' . preg_quote("$rel") . '")', "$link", $match)) {
 			return null;
 		}
 
 		return $match[1];
 	}
-
 }

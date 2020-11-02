@@ -17,7 +17,7 @@ class MockApi extends Milo\Github\Api
 	public $onRequest;
 
 	/** @return Milo\Github\Http\Response */
-	public function request(Milo\Github\Http\Request $request)
+	public function request(Milo\Github\Http\Request $request): Milo\Github\Http\Response
 	{
 		return call_user_func($this->onRequest, $request);
 	}

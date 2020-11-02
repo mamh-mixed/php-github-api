@@ -22,23 +22,22 @@ class MockClient implements Http\IClient
 	public $requestCount = 0;
 
 
-	public function request(Http\Request $request)
+	public function request(Http\Request $request): Http\Response
 	{
 		$response = call_user_func($this->onRequest, $request);
 		$this->requestCount++;
 		return $response;
 	}
 
-	public function onRequest($foo)
+	public function onRequest(?callable $foo)
 	{
-		trigger_error('Inner onRequest called: ' . var_export($foo, true), E_USER_NOTICE);
+		trigger_error('Inner onRequest called: ' . (is_object($foo) ? get_class($foo) : var_export($foo, true)), E_USER_NOTICE);
 	}
 
-	public function onResponse($foo)
+	public function onResponse(?callable $foo)
 	{
-		trigger_error('Inner onResponse called: ' . var_export($foo, true), E_USER_NOTICE);
+		trigger_error('Inner onResponse called: ' . (is_object($foo) ? get_class($foo) : var_export($foo, true)), E_USER_NOTICE);
 	}
-
 }
 
 
@@ -88,10 +87,10 @@ class CachingTestCase extends Tester\TestCase
 		Assert::same($this->innerClient, $this->client->getInnerClient());
 
 		Assert::error(function() {
-			Assert::same($this->client, $this->client->onRequest('callback-1'));
-			Assert::same($this->client, $this->client->onResponse('callback-2'));
+			Assert::same($this->client, $this->client->onRequest(function () {}));
+			Assert::same($this->client, $this->client->onResponse(function () {}));
 		}, [
-			[E_USER_NOTICE, "Inner onRequest called: 'callback-1'"],
+			[E_USER_NOTICE, "Inner onRequest called: Closure"],
 			[E_USER_NOTICE, 'Inner onResponse called: NULL'],
 		]);
 

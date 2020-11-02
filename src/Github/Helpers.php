@@ -29,12 +29,11 @@ class Helpers
 
 
 	/**
-	 * @param  mixed
-	 * @return string
+	 * @param  mixed $value
 	 *
 	 * @throws JsonException
 	 */
-	public static function jsonEncode($value)
+	public static function jsonEncode($value): string
 	{
 		if (PHP_VERSION_ID < 50500) {
 			set_error_handler(function($severity, $message) { // needed to receive 'recursion detected' error
@@ -63,12 +62,11 @@ class Helpers
 
 
 	/**
-	 * @param  mixed
-	 * @return string
+	 * @return mixed
 	 *
 	 * @throws JsonException
 	 */
-	public static function jsonDecode($json)
+	public static function jsonDecode(string $json)
 	{
 		$json = (string) $json;
 		if (!preg_match('##u', $json)) {
@@ -85,11 +83,7 @@ class Helpers
 	}
 
 
-	/**
-	 * @param  bool
-	 * @return Http\IClient
-	 */
-	public static function createDefaultClient($newInstance = false)
+	public static function createDefaultClient(bool $newInstance = false): Http\IClient
 	{
 		if (self::$client === null || $newInstance) {
 			self::$client = extension_loaded('curl')
@@ -99,5 +93,4 @@ class Helpers
 
 		return self::$client;
 	}
-
 }

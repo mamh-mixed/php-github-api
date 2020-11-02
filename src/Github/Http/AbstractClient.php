@@ -34,11 +34,9 @@ abstract class AbstractClient extends Github\Sanity implements IClient
 	/**
 	 * @see https://developer.github.com/v3/#http-redirects
 	 *
-	 * @return Response
-	 *
 	 * @throws BadResponseException
 	 */
-	public function request(Request $request)
+	public function request(Request $request): Response
 	{
 		$request = clone $request;
 
@@ -74,10 +72,9 @@ abstract class AbstractClient extends Github\Sanity implements IClient
 
 
 	/**
-	 * @param  callable|null function(Request $request)
-	 * @return self
+	 * @return static
 	 */
-	public function onRequest($callback)
+	public function onRequest(?callable $callback)
 	{
 		$this->onRequest = $callback;
 		return $this;
@@ -85,27 +82,23 @@ abstract class AbstractClient extends Github\Sanity implements IClient
 
 
 	/**
-	 * @param  callable|null function(Response $response)
-	 * @return self
+	 * @return static
 	 */
-	public function onResponse($callback)
+	public function onResponse(?callable $callback)
 	{
 		$this->onResponse = $callback;
 		return $this;
 	}
 
 
-	protected function setupRequest(Request $request)
+	protected function setupRequest(Request $request): void
 	{
 		$request->addHeader('Expect', '');
 	}
 
 
 	/**
-	 * @return Response
-	 *
 	 * @throws BadResponseException
 	 */
-	abstract protected function process(Request $request);
-
+	abstract protected function process(Request $request): Response;
 }
