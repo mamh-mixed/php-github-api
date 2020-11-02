@@ -8,7 +8,7 @@ namespace Milo\Github;
 /**
  * Undefined member access check. Stolen from Nette\Object (http://nette.org).
  */
-abstract class Sanity
+trait Strict
 {
 	/**
 	 * @throws LogicException
