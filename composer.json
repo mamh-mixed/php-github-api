@@ -14,7 +14,7 @@
 		"php": ">=7.3.0"
 	},
 	"require-dev": {
-		"nette/tester": "~1.7.0"
+		"nette/tester": "^2.3.3"
 	},
 	"suggest": {
 		"ext-curl": "Allows you to use Http\\CurlClient"
