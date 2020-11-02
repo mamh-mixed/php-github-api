@@ -54,7 +54,7 @@ class Login extends Github\Sanity
 	public function askPermissions($backUrl, $redirectCb = null)
 	{
 		/** @todo Something more safe? */
-		$state = sha1(uniqid(microtime(TRUE), TRUE));
+		$state = sha1(uniqid(microtime(true), true));
 		$params = [
 			'client_id' => $this->conf->clientId,
 			'redirect_uri' => $backUrl,

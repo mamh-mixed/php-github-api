@@ -46,7 +46,7 @@ $cases = [
 ];
 foreach ($cases as $operator => $expected) {
 	Assert::same($expected, $api->expandUriTemplate("{{$operator}a}", ['a' => '']));
-	Assert::same($expected, $api->expandUriTemplate("{{$operator}a}", ['a' => FALSE]));
+	Assert::same($expected, $api->expandUriTemplate("{{$operator}a}", ['a' => false]));
 }
 
 

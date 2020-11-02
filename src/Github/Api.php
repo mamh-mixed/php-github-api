@@ -248,7 +248,7 @@ class Api extends Sanity
 			$baseUrl = $this->url;
 		}
 
-		if (strpos($urlPath, '{') === FALSE) {
+		if (strpos($urlPath, '{') === false) {
 			$urlPath = $this->expandColonParameters($urlPath, $parameters, $this->defaultParameters);
 		} else {
 			$urlPath = $this->expandUriTemplate($urlPath, $parameters, $this->defaultParameters);
@@ -421,14 +421,14 @@ class Api extends Sanity
 		$parameters += $defaultParameters;
 
 		static $operatorFlags = [
-			''  => ['prefix' => '',  'separator' => ',', 'named' => FALSE, 'ifEmpty' => '',  'reserved' => FALSE],
-			'+' => ['prefix' => '',  'separator' => ',', 'named' => FALSE, 'ifEmpty' => '',  'reserved' => TRUE],
-			'#' => ['prefix' => '#', 'separator' => ',', 'named' => FALSE, 'ifEmpty' => '',  'reserved' => TRUE],
-			'.' => ['prefix' => '.', 'separator' => '.', 'named' => FALSE, 'ifEmpty' => '',  'reserved' => FALSE],
-			'/' => ['prefix' => '/', 'separator' => '/', 'named' => FALSE, 'ifEmpty' => '',  'reserved' => FALSE],
-			';' => ['prefix' => ';', 'separator' => ';', 'named' => TRUE,  'ifEmpty' => '',  'reserved' => FALSE],
-			'?' => ['prefix' => '?', 'separator' => '&', 'named' => TRUE,  'ifEmpty' => '=', 'reserved' => FALSE],
-			'&' => ['prefix' => '&', 'separator' => '&', 'named' => TRUE,  'ifEmpty' => '=', 'reserved' => FALSE],
+			''  => ['prefix' => '',  'separator' => ',', 'named' => false, 'ifEmpty' => '',  'reserved' => false],
+			'+' => ['prefix' => '',  'separator' => ',', 'named' => false, 'ifEmpty' => '',  'reserved' => true],
+			'#' => ['prefix' => '#', 'separator' => ',', 'named' => false, 'ifEmpty' => '',  'reserved' => true],
+			'.' => ['prefix' => '.', 'separator' => '.', 'named' => false, 'ifEmpty' => '',  'reserved' => false],
+			'/' => ['prefix' => '/', 'separator' => '/', 'named' => false, 'ifEmpty' => '',  'reserved' => false],
+			';' => ['prefix' => ';', 'separator' => ';', 'named' => true,  'ifEmpty' => '',  'reserved' => false],
+			'?' => ['prefix' => '?', 'separator' => '&', 'named' => true,  'ifEmpty' => '=', 'reserved' => false],
+			'&' => ['prefix' => '&', 'separator' => '&', 'named' => true,  'ifEmpty' => '=', 'reserved' => false],
 		];
 
 		return preg_replace_callback('~{([+#./;?&])?([^}]+?)}~', function($m) use ($url, & $parameters, $operatorFlags) {
@@ -436,14 +436,14 @@ class Api extends Sanity
 
 			$translated = [];
 			foreach (explode(',', $m[2]) as $name) {
-				$explode = FALSE;
+				$explode = false;
 				$maxLength = null;
 				if (preg_match('~^(.+)(?:(\*)|:(\d+))$~', $name, $tmp)) { // TODO: Speed up?
 					$name = $tmp[1];
 					if (isset($tmp[3])) {
 						$maxLength = (int) $tmp[3];
 					} else {
-						$explode = TRUE;
+						$explode = true;
 					}
 				}
 
@@ -464,7 +464,7 @@ class Api extends Sanity
 						$parts = [];
 						if ($isAssoc) {
 							$this->walk($value, function ($v, $k) use (& $parts, $flags, $maxLength) {
-								$parts[] = $this->prefix(['named' => TRUE] + $flags, $k, $this->escape($flags, $v, $maxLength));
+								$parts[] = $this->prefix(['named' => true] + $flags, $k, $this->escape($flags, $v, $maxLength));
 							});
 
 						} elseif ($flags['named']) {

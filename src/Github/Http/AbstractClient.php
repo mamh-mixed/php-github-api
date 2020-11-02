@@ -65,7 +65,7 @@ abstract class AbstractClient extends Github\Sanity implements IClient
 			}
 			break;
 
-		} while (TRUE);
+		} while (true);
 
 		return $response;
 	}

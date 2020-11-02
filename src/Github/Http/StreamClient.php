@@ -50,12 +50,12 @@ class StreamClient extends AbstractClient
 				'header' => implode("\r\n", $headerStr) . "\r\n",
 				'follow_location' => 0,  # Github sets the Location header for 201 code too and redirection is not required for us
 				'protocol_version' => 1.1,
-				'ignore_errors' => TRUE,
+				'ignore_errors' => true,
 			],
 			'ssl' => [
-				'verify_peer' => TRUE,
+				'verify_peer' => true,
 				'cafile' => realpath(__DIR__ . '/../../ca-chain.crt'),
-				'disable_compression' => TRUE,  # Effective since PHP 5.4.13
+				'disable_compression' => true,  # Effective since PHP 5.4.13
 			],
 		];
 
@@ -89,7 +89,7 @@ class StreamClient extends AbstractClient
 			$e = new \ErrorException($message, 0, $severity, $file, $line, $e);
 		}, E_WARNING);
 
-		$content = file_get_contents($url, FALSE, $context);
+		$content = file_get_contents($url, false, $context);
 		restore_error_handler();
 
 		if (!isset($http_response_header)) {
@@ -103,7 +103,7 @@ class StreamClient extends AbstractClient
 
 		$headers = [];
 		foreach ($http_response_header as $header) {
-			if (in_array(substr($header, 0, 1), [' ', "\t"], TRUE)) {
+			if (in_array(substr($header, 0, 1), [' ', "\t"], true)) {
 				$headers[$last] .= ' ' . trim($header);  # RFC2616, 2.2
 			} else {
 				list($name, $value) = explode(':', $header, 2) + [null, null];

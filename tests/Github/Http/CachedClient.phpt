@@ -30,12 +30,12 @@ class MockClient implements Http\IClient
 
 	public function onRequest($foo)
 	{
-		trigger_error('Inner onRequest called: ' . var_export($foo, TRUE), E_USER_NOTICE);
+		trigger_error('Inner onRequest called: ' . var_export($foo, true), E_USER_NOTICE);
 	}
 
 	public function onResponse($foo)
 	{
-		trigger_error('Inner onResponse called: ' . var_export($foo, TRUE), E_USER_NOTICE);
+		trigger_error('Inner onResponse called: ' . var_export($foo, true), E_USER_NOTICE);
 	}
 
 }
@@ -94,10 +94,10 @@ class CachingTestCase extends Tester\TestCase
 			[E_USER_NOTICE, 'Inner onResponse called: NULL'],
 		]);
 
-		$onResponseCalled = FALSE;
+		$onResponseCalled = false;
 		Assert::error(function() use (& $onResponseCalled) {
 			$this->client->onResponse(function() use (& $onResponseCalled) {
-				$onResponseCalled = TRUE;
+				$onResponseCalled = true;
 			});
 		}, E_USER_NOTICE, 'Inner onResponse called: NULL');
 
@@ -264,7 +264,7 @@ class CachingTestCase extends Tester\TestCase
 
 	public function testForbidRecheckEnabled()
 	{
-		$this->client = new Http\CachedClient(new MockCache, $this->innerClient, TRUE);
+		$this->client = new Http\CachedClient(new MockCache, $this->innerClient, true);
 
 		$request = new Http\Request('', '', [], 'enabled');
 

@@ -73,8 +73,8 @@ class FileCache extends Github\Sanity implements ICache
 			flock($fd, LOCK_UN);
 			fclose($fd);
 
-			$success = TRUE;
-			set_error_handler(function() use (& $success) { return $success = FALSE; }, E_NOTICE);
+			$success = true;
+			set_error_handler(function() use (& $success) { return $success = false; }, E_NOTICE);
 			$cached = unserialize($cached);
 			restore_error_handler();
 
