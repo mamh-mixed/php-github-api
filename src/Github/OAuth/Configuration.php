@@ -39,6 +39,6 @@ class Configuration
 
 	public static function fromArray(array $conf): Configuration
 	{
-		return new static($conf['clientId'], $conf['clientSecret'], isset($conf['scopes']) ? $conf['scopes'] : []);
+		return new static($conf['clientId'], $conf['clientSecret'], $conf['scopes'] ?? []);
 	}
 }

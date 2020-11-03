@@ -68,7 +68,7 @@ class StreamClient extends AbstractClient
 			$options['ssl'] = $this->sslOptions + $options['ssl'];
 		}
 
-		list($code, $headers, $content) = $this->fileGetContents($request->getUrl(), $options);
+		[$code, $headers, $content] = $this->fileGetContents($request->getUrl(), $options);
 		return new Response($code, $headers, $content);
 	}
 
@@ -103,7 +103,7 @@ class StreamClient extends AbstractClient
 			if (in_array(substr($header, 0, 1), [' ', "\t"], true)) {
 				$headers[$last] .= ' ' . trim($header);  # RFC2616, 2.2
 			} else {
-				list($name, $value) = explode(':', $header, 2) + [null, null];
+				[$name, $value] = explode(':', $header, 2) + [null, null];
 				$headers[$last = trim($name)] = trim($value);
 			}
 		}

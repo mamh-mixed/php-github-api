@@ -112,12 +112,9 @@ class Paginator implements \Iterator
 
 	public static function parsePage(string $url): int
 	{
-		list (, $parametersStr) = explode('?', $url, 2) + ['', ''];
+		[, $parametersStr] = explode('?', $url, 2) + ['', ''];
 		parse_str($parametersStr, $parameters);
-
-		return isset($parameters['page'])
-			? max(1, (int) $parameters['page'])
-			: 1;
+		return max((int) ($parameters['page'] ?? 1), 1);
 	}
 
 

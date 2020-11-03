@@ -208,7 +208,7 @@ class Api
 
 		} elseif (preg_match('#^(https://[^/]+)(/.*)?$#', $urlPath, $m)) {
 			$baseUrl = $m[1];
-			$urlPath = isset($m[2]) ? $m[2] : '';
+			$urlPath = $m[2] ?? '';
 
 		} else {
 			$baseUrl = $this->url;
@@ -512,9 +512,7 @@ class Api
 
 	private static function errorMessage(\stdClass $content): string
 	{
-		$message = isset($content->message)
-			? $content->message
-			: 'Unknown error';
+		$message = $content->message ??  'Unknown error';
 
 		if (isset($content->errors)) {
 			$message .= implode(', ', array_map(function($error) {

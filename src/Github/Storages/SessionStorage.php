@@ -51,10 +51,7 @@ class SessionStorage implements ISessionStorage
 	public function get(string $name)
 	{
 		$this->check(__METHOD__);
-
-		return isset($_SESSION[$this->sessionKey][$name])
-			? $_SESSION[$this->sessionKey][$name]
-			: null;
+		return $_SESSION[$this->sessionKey][$name] ?? null;
 	}
 
 
