@@ -72,7 +72,7 @@ class CurlClient extends AbstractClient
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_POSTFIELDS => $request->getContent(),
 			CURLOPT_HEADER => false,
-			CURLOPT_HEADERFUNCTION => function($curl, $line) use (& $responseHeaders, & $last) {
+			CURLOPT_HEADERFUNCTION => function($curl, $line) use (&$responseHeaders, &$last) {
 				if (strncasecmp($line, 'HTTP/', 5) === 0) {
 					/** @todo Set proxy response as Response::setPrevious($proxyResponse)? */
 					# The HTTP/x.y may occur multiple times with proxy (HTTP/1.1 200 Connection Established)

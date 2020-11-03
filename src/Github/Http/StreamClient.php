@@ -85,7 +85,7 @@ class StreamClient extends AbstractClient
 		$context = stream_context_create($contextOptions);
 
 		$e = null;
-		set_error_handler(function($severity, $message, $file, $line) use (& $e) {
+		set_error_handler(function($severity, $message, $file, $line) use (&$e) {
 			$e = new \ErrorException($message, 0, $severity, $file, $line, $e);
 		}, E_WARNING);
 

@@ -388,7 +388,7 @@ class Api extends Sanity
 	{
 		$parameters += $defaultParameters;
 
-		$url = preg_replace_callback('#(^|/|\.):([^/.]+)#', function($m) use ($url, & $parameters) {
+		$url = preg_replace_callback('#(^|/|\.):([^/.]+)#', function($m) use ($url, &$parameters) {
 			if (!isset($parameters[$m[2]])) {
 				throw new MissingParameterException("Missing parameter '$m[2]' for URL path '$url'.");
 			}
@@ -431,7 +431,7 @@ class Api extends Sanity
 			'&' => ['prefix' => '&', 'separator' => '&', 'named' => true,  'ifEmpty' => '=', 'reserved' => false],
 		];
 
-		return preg_replace_callback('~{([+#./;?&])?([^}]+?)}~', function($m) use ($url, & $parameters, $operatorFlags) {
+		return preg_replace_callback('~{([+#./;?&])?([^}]+?)}~', function($m) use ($url, &$parameters, $operatorFlags) {
 			$flags = $operatorFlags[$m[1]];
 
 			$translated = [];
@@ -463,17 +463,17 @@ class Api extends Sanity
 					if ($explode) {
 						$parts = [];
 						if ($isAssoc) {
-							$this->walk($value, function ($v, $k) use (& $parts, $flags, $maxLength) {
+							$this->walk($value, function ($v, $k) use (&$parts, $flags, $maxLength) {
 								$parts[] = $this->prefix(['named' => true] + $flags, $k, $this->escape($flags, $v, $maxLength));
 							});
 
 						} elseif ($flags['named']) {
-							$this->walk($value, function ($v) use (& $parts, $flags, $name, $maxLength) {
+							$this->walk($value, function ($v) use (&$parts, $flags, $name, $maxLength) {
 								$parts[] = $this->prefix($flags, $name, $this->escape($flags, $v, $maxLength));
 							});
 
 						} else {
-							$this->walk($value, function ($v) use (& $parts, $flags, $maxLength) {
+							$this->walk($value, function ($v) use (&$parts, $flags, $maxLength) {
 								$parts[] = $this->escape($flags, $v, $maxLength);
 							});
 						}
@@ -488,7 +488,7 @@ class Api extends Sanity
 
 					} else {
 						$parts = [];
-						$this->walk($value, function($v, $k) use (& $parts, $isAssoc, $flags, $maxLength) {
+						$this->walk($value, function($v, $k) use (&$parts, $isAssoc, $flags, $maxLength) {
 							if ($isAssoc) {
 								$parts[] = $this->escape($flags, $k);
 							}

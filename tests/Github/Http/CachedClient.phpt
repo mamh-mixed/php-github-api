@@ -95,8 +95,8 @@ class CachingTestCase extends Tester\TestCase
 		]);
 
 		$onResponseCalled = false;
-		Assert::error(function() use (& $onResponseCalled) {
-			$this->client->onResponse(function() use (& $onResponseCalled) {
+		Assert::error(function() use (&$onResponseCalled) {
+			$this->client->onResponse(function() use (&$onResponseCalled) {
 				$onResponseCalled = true;
 			});
 		}, E_USER_NOTICE, 'Inner onResponse called: NULL');

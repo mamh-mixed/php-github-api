@@ -48,7 +48,7 @@ class PaginatorTestCase extends Tester\TestCase
 		));
 
 		$requests = [];
-		$this->api->onRequest = function(Milo\Github\Http\Request $request) use (& $requests, & $responses) {
+		$this->api->onRequest = function(Milo\Github\Http\Request $request) use (&$requests, &$responses) {
 			$requests[] = $request;
 			return array_shift($responses);
 		};
@@ -114,7 +114,7 @@ class PaginatorTestCase extends Tester\TestCase
 			'url://test?page=20'
 		));
 
-		$this->api->onRequest = function(Milo\Github\Http\Request $request) use (& $requests, & $stack) {
+		$this->api->onRequest = function(Milo\Github\Http\Request $request) use (&$requests, &$stack) {
 			$requests[] = $request;
 			return array_shift($stack);
 		};
